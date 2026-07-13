@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RepoViewer</string>
+
+    <string name="repositories">Репозитории</string>
+    <string name="license">Лицензия</string>
+    <string name="stars">звезды</string>
+    <string name="forks">форки</string>
+    <string name="watchers">наблюдатели</string>
+
+    <string name="personal_access_token">Персональный токен доступа</string>
+    <string name="invalid_token">Неправильный токен</string>
+    <string name="empty_value">Пустое значение</string>
+
+    <string name="unknown">Неизвестая ошибка</string>
+    <string name="token_not_found">Токен не найден</string>
+    <string name="missing_repos">Репозитории отсутствуют</string>
+
+    <string name="no_license">Лицензия отсутствует</string>
+    <string name="missing_readme">README отсутствует</string>
+    <string name="sign_in">Войти</string>
+</resources>

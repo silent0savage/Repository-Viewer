@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">RepoViewer</string>
+
+    <string name="repositories">Repositories</string>
+    <string name="license">License</string>
+    <string name="stars">stars</string>
+    <string name="forks">forks</string>
+    <string name="watchers">watchers</string>
+
+    <string name="personal_access_token">Personal Access Token</string>
+    <string name="invalid_token">Invalid Token</string>
+    <string name="empty_value">Empty Value</string>
+
+    <string name="unknown">Unknown error</string>
+    <string name="token_not_found">Token not found</string>
+    <string name="missing_repos">There are no repositories</string>
+
+    <string name="no_license">No License</string>
+    <string name="missing_readme">README is missing</string>
+    <string name="sign_in">SIGN IN</string>
+</resources>
