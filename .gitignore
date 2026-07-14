@@ -1,7 +1,6 @@
 # Gradle
 .gradle/
 .gradle-user-home/
-**/build/
 
 # Android Studio
 .idea/

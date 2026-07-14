@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class InfoViewModel(
-    private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
     private val githubRepository: GithubRepository,
 ): ViewModel() {
     private val _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
@@ -46,44 +46,42 @@ class InfoViewModel(
 
             _state.value = State.Loading
 
-            githubRepository.getRepositoryDetails(owner, repo)
-                .onSuccess { repoInfo ->
-
-                    val loadedState = State.Loaded(
-                        githubRepo = repoInfo,
-                        readmeState = ReadmeState.Loading
-                    )
-
-                    _state.value = loadedState
-
-                    githubRepository.getRepositoryReadme(owner, repo)
-                        .onSuccess { markdown ->
-                            _state.value = loadedState.copy(
-                                readmeState =
-                                    if (markdown.isBlank())
-                                        ReadmeState.Empty
-                                    else
-                                        ReadmeState.Loaded(markdown)
-                            )
-                        }
-                        .onFailure { error ->
-                            _state.value =
-                                if (error is ClientRequestException &&
-                                    error.response.status == HttpStatusCode.NotFound
-                                ) {
-                                    loadedState.copy(
-                                        readmeState = ReadmeState.Empty
-                                    )
-                                } else {
-                                    loadedState.copy(
-                                        readmeState = ReadmeState.Error(R.string.missing_readme)
-                                    )
-                                }
-                        }
-                }
-                .onFailure {
+            val repoInfo = githubRepository
+                .getRepositoryDetails(owner, repo)
+                .getOrElse {
                     _state.value = State.Error(R.string.unknown)
+                    return@launch
                 }
+
+            val loadedState = State.Loaded(
+                githubRepo = repoInfo,
+                readmeState = ReadmeState.Loading
+            )
+
+            _state.value = loadedState
+
+            val readmeResult = githubRepository.getRepositoryReadme(owner, repo)
+
+            _state.value = loadedState.copy(
+                readmeState = readmeResult.fold(
+                    onSuccess = { markdown ->
+                        if (markdown.isBlank()) {
+                            ReadmeState.Empty
+                        } else {
+                            ReadmeState.Loaded(markdown)
+                        }
+                    },
+                    onFailure = { error ->
+                        if (error is ClientRequestException &&
+                            error.response.status == HttpStatusCode.NotFound
+                        ) {
+                            ReadmeState.Empty
+                        } else {
+                            ReadmeState.Error(R.string.missing_readme)
+                        }
+                    }
+                )
+            )
         }
     }
 }

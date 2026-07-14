@@ -1,6 +1,5 @@
 package com.example.repoviewer.ui.list
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -75,7 +74,6 @@ fun ListScreen(
         }
 
         is ListViewModel.State.Empty -> {
-            Log.d("ListScreen", state.toString())
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -113,14 +111,14 @@ fun ListItem(
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = repo.language ?: "",
+                    text = repo.language.orEmpty(),
                     color = MaterialTheme.colorScheme.secondary
                 )
             }
 
             Row {
                 Text(
-                    text = repo.description ?: "",
+                    text = repo.description.orEmpty(),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
