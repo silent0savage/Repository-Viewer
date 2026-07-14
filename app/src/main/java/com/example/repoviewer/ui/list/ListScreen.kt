@@ -108,12 +108,13 @@ fun ListItem(
             ) {
                 Text(
                     text = repo.repo,
+                    color = MaterialTheme.colorScheme.primary,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
                     text = repo.language ?: "",
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.secondary
                 )
             }
 
